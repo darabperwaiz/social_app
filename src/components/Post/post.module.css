@@ -1,0 +1,80 @@
+.post {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(128, 128, 128, 0.532);
+}
+
+.postTop {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.postTop img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.userInfo>p:nth-child(1) {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.userInfo>p:nth-child(2) {
+    font-size: 14px;
+    color: gray;
+}
+
+.postMid>p {
+    padding: 0 10px;
+    margin-bottom: 5px;
+}
+
+.postImg {
+    width: 100%;
+    height: 400px;
+}
+
+.postImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.postBottom {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.postBottomBtn {
+    display: flex;
+}
+
+.postBottomBtn>button {
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.postComments {
+    padding: 10px;
+}
+
+
+
+.liked {
+    color: blue;
+    font-size: 22px;
+}
