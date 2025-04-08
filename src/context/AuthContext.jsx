@@ -39,7 +39,6 @@ export function AuthProvider({children}) {
         if(data.id === userData?.id) {
             localStorage.setItem('user', JSON.stringify(userData))
             setUser(userData);
-            // navigate('/');
         } else {
             console.log("You are not allowed!")
         }

@@ -39,7 +39,7 @@ const Post = ({post}) => {
               </div>
               <div className={style.postBottom}>
                 <div className={style.postBottomBtn}>
-                  <button onClick={handleLike}>{isLiked ? <i className={`fa-solid fa-thumbs-up ${style.liked}`}></i>: <i className="fa-solid fa-thumbs-up"></i>}{post?.likes?.length}</button>
+                  <button onClick={handleLike}>{isLiked ? <i className={`fa-solid fa-thumbs-up ${style.liked}`}></i>: <i className={`fa-solid fa-thumbs-up ${style.notLiked}`}></i>}{post?.likes?.length}</button>
                   <button onClick={()=> setShowComment(!showComment)}>Comment</button>
                 </div>
                 {showComment && <div className={style.postComments}>

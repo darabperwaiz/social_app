@@ -195,10 +195,12 @@ textarea {
 
 .addPhotos>i  {
     font-size: 22px;
+    color: #000;
 }
 
 .addPhotos>p {
     font-size: 18px;
+    color: #000;
 }
 
 .removeImg {
