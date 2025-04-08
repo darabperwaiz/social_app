@@ -40,7 +40,7 @@ const Profile = () => {
     if(filteredPost) {
       setUPost(filteredPost)
     }
-  }, [])
+  }, [posts])
 
   return (
     <div className={style.profilePage}>
