@@ -51,8 +51,8 @@ A full-featured social media application built with React, featuring authenticat
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/react-social-media-app.git
-   cd react-social-media-app
+   git clone https://github.com/darabperwaiz/social_app.git
+   cd social_app
 Install dependencies:
 
 ```bash
