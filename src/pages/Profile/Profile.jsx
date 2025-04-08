@@ -5,12 +5,13 @@ import { usePosts } from "../../hooks/usePosts"
 
 const Profile = () => {
   const {user, updateUser} = useAuth()
-  const {posts, deletePost} = usePosts();
+  const {posts, updatePost, deletePost} = usePosts();
   const [uPost, setUPost] = useState(null);
+  const [editPost, setEditPost] = useState({});
+  const [activePopup, setActivePopup] = useState(false);
 
   const handleDP = (e) => {
     const dp = e.target.files[0];
-    console.log(dp)
     if(dp) {
       const reader = new FileReader();
       reader.readAsDataURL(dp);
@@ -32,6 +33,42 @@ const Profile = () => {
     updateUser(nUser)
   }
 
+  const handleEditPost = (post) => {
+    setActivePopup(true);
+    setEditPost(post);
+  }
+
+  const handleImage = (e) => {
+    const image = e.target.files[0]
+    if(image) {
+        const reader = new FileReader()
+        reader.readAsDataURL(image)
+        reader.onloadend = () => {
+            setEditPost((prev) => (
+                {...prev, image: reader.result}
+            ));  
+        }
+    }
+}
+
+const handleText = (e) => {
+    const value = e.target.value;
+    setEditPost((prev)=> (
+        {...prev, text: value}
+    ))
+}
+
+const handleImagePrev = () => {
+  setEditPost((prev)=> (
+    {...prev, image: ''}
+  ))
+}
+
+const handleUpdatePost = () => {
+  setActivePopup(false);
+  updatePost(editPost);
+}
+
   useEffect(()=> {
     const filteredPost = posts.filter((post)=> {
       return post.author.id === user.id
@@ -41,6 +78,7 @@ const Profile = () => {
       setUPost(filteredPost)
     }
   }, [posts])
+
 
   return (
     <div className={style.profilePage}>
@@ -62,20 +100,53 @@ const Profile = () => {
       <p className={style.email}>{user.email}</p>
       </div>
       <div className={style.userPosts}>
-        <h3>All Posts</h3>
+        <h3>Your Posts</h3>
         <div className={style.container}>
           {uPost?.map((post)=> (
             <div className={style.userpost}>
                 <p>{post.text}</p>
-                {post.image && <div className={style.imgWrap}><img src={post.image} alt="" /></div>}
+                {post.image ? <div className={style.imgWrap}><img src={post.image} alt="" /></div> :
+                <div className={style.imgWrap}><img src="https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=" alt="" /></div>
+                }
                 <div className={style.btns}>
-                  <button>Edit</button>
+                  <button onClick={()=> handleEditPost(post)}>Edit</button>
                   <button onClick={()=> deletePost(post.id)}>Delete</button>
                 </div>
             </div>
           ))}
         </div>
       </div>
+      {activePopup && <div className={style.popContainer} >
+        <div className={style.popupOverlay} onClick={()=> setActivePopup(false)}></div>
+        <div className={style.popupModal}>
+                  <h2>Edit Post</h2>
+                <form className={style.form}>
+                    <textarea type="text" name="text" value={editPost.text} placeholder={`What's on your mind, ${user.name}?`} onChange={handleText}></textarea>
+                    {editPost?.image ? 
+                    <div className={style.uploadImg}>
+                        <div className={style.previewContainer}>
+                            <img src={editPost?.image} alt="Placeholder Image" />
+                            <button className={style.removeImg} onClick={handleImagePrev}><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                    </div>
+                :
+                <label htmlFor="img">
+                    <div className={style.uploadImg}>
+                        <div className={style.imgContainer}>
+                            <div className={style.addPhotos}>
+                                <i class="fa-solid fa-image"></i>
+                                <p>Add Photo</p>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="file" id="img" name="image" hidden accept="image/*" onChange={handleImage}/>
+                    </label>    
+                }
+        
+                </form>
+                <button  className={style.postBtn} onClick={handleUpdatePost}>Update</button>
+              </div>
+      </div>}
     </div>
   )
 }
